@@ -31,10 +31,10 @@
                                     <tr>
                                         <th>{{ __('dashboard.name') }}</th>
                                         <th>{{ __('dashboard.company') }}</th>
-                                        <th>{{ __('dashboard.state') }}</th>
-                                        <th>{{ __('dashboard.city') }}</th>
                                         <th>{{ __('dashboard.email') }}</th>
                                         <th>{{ __('dashboard.ph_no') }}</th>
+                                        <th>{{ __('dashboard.city') }}</th>
+                                        <th>{{ __('dashboard.state') }}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
