@@ -26,7 +26,7 @@
                         <div class="card-header"><i class="fas fa-table mr-1"></i>{{ __('dashboard.table') }}</div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="inquiry-table" width="100%" cellspacing="0">
                                     <thead>
                                     <tr>
                                         <th>{{ __('dashboard.name') }}</th>
@@ -37,16 +37,6 @@
                                         <th>{{ __('dashboard.ph_no') }}</th>
                                     </tr>
                                     </thead>
-                                    <tfoot>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
-                                    </tr>
-                                    </tfoot>
                                     <tbody>
 
                                     </tbody>
@@ -66,8 +56,56 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="{{asset('assets/js/scripts.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="{{asset('assets/assets/demo/chart-area-demo.js')}}"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
-    <script src="{{asset('assets/assets/demo/datatables-demo.js')}}"></script>
+    <script>
+        $(function() {
+            $('#inquiry-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{!! route('datatable.data') !!}',
+                columns: [
+                    { data: 'full_name', name: 'full_name' },
+                    { data: 'company_name', name: 'company_name' },
+                    { data: 'email', name: 'email' },
+                    { data: 'phone', name: 'phone' },
+                    { data: 'city', name: 'city' },
+                    { data: 'state', name: 'state' },
+                    // { data: 'created_at', name: 'created_at' },
+                    // { data: 'updated_at', name: 'updated_at' }
+                ]
+            });
+        });
+
+        // Area Chart
+        var ctx = document.getElementById("myAreaChart");
+        var myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [
+                    @foreach($data as $date=>$value)
+                    "{{$date}}",
+                    @endforeach
+                ],
+                datasets: [{
+                    label: "Total Inquiries",
+                    backgroundColor: "rgba(2,117,216,0.2)",
+                    borderColor: "rgba(2,117,216,1)",
+                    pointBackgroundColor: "rgba(2,117,216,1)",
+                    pointBorderColor: "rgba(255,255,255,0.8)",
+                    pointHoverBackgroundColor: "rgba(2,117,216,1)",
+                    data: [
+                        @foreach($data as $date=>$value)
+                            "{{$value}}",
+                        @endforeach
+                    ],
+                }],
+            },
+            options: {
+                legend: {
+                    display: false
+                }
+            }
+        });
+    </script>
 @endsection

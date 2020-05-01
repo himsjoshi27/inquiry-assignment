@@ -12,15 +12,15 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('inquiry');
-});
-
 Auth::routes();
 
-//Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'InquiryController@index');
+Route::post('/', 'InquiryController@create');
+Route::post('/city-list', 'InquiryController@getCityList');
 
-Route::get('/dashboard', function (){
-    return view('admin.inquiry.dashboard');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/dashboard', 'DashboardController@index');
+    Route::get('/datatable-data', 'DashboardController@getInquiryList')->name('datatable.data');
+
 });
+

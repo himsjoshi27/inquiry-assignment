@@ -45,7 +45,6 @@
                                     </form>
                                 </div>
                                 <div class="card-footer text-center">
-                                    <div class="small"><a href="#">{{ __('Login') }}</a></div>
                                 </div>
                             </div>
                         </div>
